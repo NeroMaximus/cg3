@@ -1,5 +1,7 @@
 package ru.nsu;
 
+import java.util.Vector;
+
 /**
  * Created by nero on 5/4/14.
  */
@@ -20,9 +22,14 @@ public class BMPImageInfo {
     private int YPelsPerMeter;
     private int clrUsed;
     private int clrImportant;
+    private Vector<Byte> vector;
+
+    public BMPImageInfo() {
+        vector = new Vector<Byte>(10);
+    }
 
     public void setFileSize(int fileSize) {
-        this.fileSize = fileSize;
+        System.out.println("FILESIZE="+fileSize); this.fileSize = fileSize; //1440054
     }
 
     public int getFileSize() {
@@ -123,5 +130,19 @@ public class BMPImageInfo {
 
     public int getClrImportant() {
         return clrImportant;
+    }
+
+    public void addBytes(byte[] buffer) {
+        for( int k = 0; k < buffer.length; k++)
+            vector.add(buffer[k]);
+    }
+
+    public byte[] getBytes() {
+        System.out.println("size="+vector.size());
+        byte[] buf = new byte[vector.size()];
+        for (int a = 0; a < vector.size(); a++)
+            buf[a] = vector.get(a);
+
+        return buf;
     }
 }

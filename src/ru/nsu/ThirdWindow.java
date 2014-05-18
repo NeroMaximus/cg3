@@ -12,7 +12,7 @@ public class ThirdWindow extends JPanel {
     MyRGB[][] array = null;
     BufferedImage bufferedImage = new BufferedImage(256,256, BufferedImage.TYPE_INT_RGB);
 
-    ThirdWindow(){
+    public ThirdWindow(){
         super();
         setSize( new Dimension(256,256) );
         setMaximumSize( new Dimension(256,256));
@@ -41,5 +41,9 @@ public class ThirdWindow extends JPanel {
 
     public void setArray(MyRGB[][] array) {
         this.array = array;
+    }
+
+    public MyRGB[][] getArray() {
+        return array;
     }
 }

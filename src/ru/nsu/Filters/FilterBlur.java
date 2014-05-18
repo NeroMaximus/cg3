@@ -53,7 +53,7 @@ public class FilterBlur extends Filter {
         return int_value;
     }
 
-    private static void fillExtendedArray(MyRGB[][] extended_array, MyRGB[][] array) {
+    public static void fillExtendedArray(MyRGB[][] extended_array, MyRGB[][] array) {
         for ( int i = 0; i < 256; i++)
             for (int j = 0; j < 256; j++) {
                 extended_array[i+1][j+1].setRed(array[i][j].getRed());

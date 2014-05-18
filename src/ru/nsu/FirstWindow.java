@@ -10,29 +10,27 @@ import java.awt.image.BufferedImage;
  * Created by nero on 4/25/14.
  */
 public class FirstWindow extends JPanel implements MouseMotionListener {
-    int width;
-    int height;
-    int aspectSides = 0;
-    int borders;
-    SecondWindow secondWindow = null;
-    BufferedImage bufferedImage = null;
+    private int width;
+    private int height;
+    private int aspectSides = 0;
+    private int borders;
+    private SecondWindow secondWindow = null;
+    private BufferedImage bufferedImage = null;
 
-    int centerX = 140;
-    int centerY = 140;
-    int frameLenght;
-    public MyRGB[][] array = null;
+    private int centerX = 128;
+    private int centerY = 128;
+    private int frameLenght;
+    private  MyRGB[][] array = null;
 
     FirstWindow(){
         super();
         setSize( new Dimension(256,256) );
         setMaximumSize( new Dimension(256,256));
         setMinimumSize( new Dimension(256,256));
-        setBackground( Color.blue );
+//        setBackground( Color.black );
 
         addMouseMotionListener(this);
     }
-
-
 
     public void paintComponent(Graphics graphics){
         super.paintComponent(graphics);
@@ -45,7 +43,7 @@ public class FirstWindow extends JPanel implements MouseMotionListener {
 
         for ( int x = 0; x<width; x++)
             for ( int y = 0; y< height; y++ ) {
-                bufferedImage.setRGB( x, y, calculateFileSize(array[x][y].getRed(), array[x][y].getGreen(), array[x][y].getBlue()));
+                bufferedImage.setRGB( x, y, assembleRGB(array[x][y].getRed(), array[x][y].getGreen(), array[x][y].getBlue()));
             }
 
 
@@ -56,8 +54,11 @@ public class FirstWindow extends JPanel implements MouseMotionListener {
             if ( height > width) {
                 aspectSides = 1;
                 frameLenght = 256*256/height;
+
                 borders = (256 - 256 * width / height)/2;
                 graphics2D.drawImage(bufferedImage, (256 - 256 * width / height) / 2, 0, 256 - (256 - 256 * width / height), 256, null);
+                graphics2D.setColor( Color.yellow);
+                graphics2D.drawRect( centerX - frameLenght/2, centerY - frameLenght/2, frameLenght, frameLenght);
 
             } else if (height < width) {
                 aspectSides = 2;
@@ -70,9 +71,11 @@ public class FirstWindow extends JPanel implements MouseMotionListener {
                 aspectSides = 0;
                 frameLenght = 256*256/width;
                 borders = (256 - 256 * width / height)/2;
-                graphics2D.drawImage(bufferedImage, 0, 0, 256, 256, null);//(bufferedImage, null, 0, 0);//(bufferedImage, null, 600, 800);
+                graphics2D.drawImage(bufferedImage, 0, 0, 256, 256, null);
+                graphics2D.setColor( Color.yellow);
+                graphics2D.drawRect( centerX - frameLenght/2, centerY - frameLenght/2, frameLenght, frameLenght);
             }
-            //repaintSecondWindow();
+            repaintSecondWindow( centerX-frameLenght/2, centerY - frameLenght/2);
         }}
     }
 
@@ -82,7 +85,6 @@ public class FirstWindow extends JPanel implements MouseMotionListener {
             case 1:
                 if (e.getX() > borders + frameLenght/2 && e.getX() < 256 - frameLenght/2 - borders) {
                     centerX = e.getX();
-                 //   System.out.println("Center at x = "+e.getX()+ "with framel = "+ frameLenght);
                 }
                 if (e.getY() > frameLenght/2 && e.getY() < 256 - frameLenght/2) {
                     centerY = e.getY();
@@ -96,12 +98,6 @@ public class FirstWindow extends JPanel implements MouseMotionListener {
                     centerY = e.getY();
                 }
 
-//                if (e.getX() -frameLenght/2 >= 0 && e.getX() + frameLenght/2 < width &&
-//                        e.getY() - frameLenght >=0 && e.getY() + frameLenght/2 < height) {
-                    repaint();
-                    repaintSecondWindow( centerX - frameLenght/2, centerY - frameLenght/2 );
-//                }
-
                 break;
             case 0:
                 if (e.getX() > frameLenght/2 && e.getX() < 256 - frameLenght/2) {
@@ -114,6 +110,10 @@ public class FirstWindow extends JPanel implements MouseMotionListener {
                 }
                 break;
         }
+
+        repaint();
+        repaintSecondWindow( centerX - frameLenght/2, centerY - frameLenght/2 );
+
     }
 
     @Override
@@ -146,7 +146,35 @@ public class FirstWindow extends JPanel implements MouseMotionListener {
         return subArray;
     }
 
-    private int calculateFileSize(int b, int b1, int b2) {
-        return b*65536 + b1*256 + b2;
+    private int assembleRGB(int b, int b1, int b2) {
+        int size = 0;
+
+        if (b < 0)
+            size += (256+b)*65536;
+        else
+            size += b*65536;
+
+        if (b1 < 0)
+            size += (256+b1)*256;
+        else
+            size += b1*256;
+
+        if (b2 < 0)
+            size += 256+b2;
+        else
+            size += b2;
+        return size;
+    }
+
+    public void setArray(MyRGB[][] array) {
+        this.array = array;
+    }
+
+    public void setSecondWindow(SecondWindow secondWindow) {
+        this.secondWindow = secondWindow;
+    }
+
+    public MyRGB[][] getArray() {
+        return array;
     }
 }

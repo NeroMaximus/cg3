@@ -9,6 +9,15 @@ public class MyRGB {
     int green;
     int blue;
 
+    public MyRGB() {
+    }
+
+    public MyRGB(MyRGB myRGB) {
+        this.red = myRGB.getRed();
+        this.green = myRGB.getGreen();
+        this.blue = myRGB.getBlue();
+    }
+
     public void setRed(int red) {
         if (red >= 0)
             this.red = red;
