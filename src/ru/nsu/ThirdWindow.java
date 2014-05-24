@@ -30,6 +30,12 @@ public class ThirdWindow extends JPanel {
         for ( int j = 0; j < 256; j++)
             for ( int i = 0; i < 256; i++){
                 bufferedImage.setRGB( i, j, assembleRGB( array[i][j].getRed(), array[i][j].getGreen(), array[i][j].getBlue()));
+                if (array[i][j].getRed() < 0 || array[i][j].getRed() > 255)
+                    System.out.println("RED="+array[i][j].getRed());
+                if (array[i][j].getGreen() < 0 || array[i][j].getGreen() > 255)
+                    System.out.println("GREEN="+array[i][j].getGreen());
+                if (array[i][j].getBlue() < 0 || array[i][j].getBlue() > 255)
+                    System.out.println("BLUE="+array[i][j].getBlue());
             }
 
         graphics2D.drawImage(bufferedImage, 0, 0, 256, 256, null);

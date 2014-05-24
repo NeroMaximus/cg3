@@ -30,27 +30,77 @@ public class FilterFloydSteinbergDithering extends Filter {
         for ( int x= 0; x < 256; x++)
             for ( int y = 0; y < 256; y++) {
 
-                red_oldpixel = array[x][y].getRed();
-                red_newpixel = find_closest_palette_color_for_red(red_oldpixel);
-
-                new_array[x][y].setRed(red_newpixel);
-                quant_error = red_oldpixel - red_newpixel;
-                if ( x+1 < 256 )new_array[x+1][y  ].setRed((int) (new_array[x+1][y  ].getRed() + quant_error * 7.0/16));
-                if ( x-1 > 0 && y+1 < 256 )new_array[x-1][y+1].setRed((int) (new_array[x-1][y+1].getRed() + quant_error * 3.0/16));
-                if ( y+1 < 256 )new_array[x  ][y+1].setRed((int) (new_array[x  ][y+1].getRed() + quant_error * 5.0/16));
-                if ( x+1 < 256 && y+1 < 256)new_array[x+1][y+1].setRed((int) (new_array[x+1][y+1].getRed() + quant_error * 1.0/16));
-
-
 
                 green_oldpixel = new_array[x][y].getGreen();
                 green_newpixel = find_closest_palette_color_for_green(green_oldpixel);
-                System.out.println("old=" + green_oldpixel +" new "+green_newpixel+"_"+green_param);
+                System.out.println("old = "+green_oldpixel + " new = "+ green_newpixel + " param=" +green_param );
+                if ( green_newpixel > 255)
+                    green_newpixel = 255;
                 new_array[x][y].setGreen(green_newpixel);
                 quant_error = green_oldpixel - green_newpixel;
-                if ( x+1 < 256 )new_array[x+1][y  ].setGreen(new_array[x+1][y  ].getGreen() + quant_error * 7/16);
-                if ( x-1 > 0 && y+1 < 256 )new_array[x-1][y+1].setGreen(new_array[x-1][y+1].getGreen() + quant_error * 3/16);
-                if ( y+1 < 256 )new_array[x  ][y+1].setGreen(new_array[x  ][y+1].getGreen() + quant_error * 5/16);
-                if ( x+1 < 256 && y+1 < 256)new_array[x+1][y+1].setGreen(new_array[x+1][y+1].getGreen() + quant_error * 1/16);
+                int some_green;
+
+                if ( x+1 < 256 ) {
+                    some_green= (int) (new_array[x+1][y  ].getGreen() + quant_error * 7.0/16);
+                    if (some_green > 255) some_green = 255;
+                    new_array[x+1][y  ].setGreen(some_green);
+                }
+                if ( x-1 > 0 && y+1 < 256 ) {
+                    some_green = (int) (new_array[x-1][y+1].getGreen() + quant_error * 3.0/16);
+                    if (some_green > 255) some_green = 255;
+                    new_array[x-1][y+1].setGreen(some_green);
+                }
+
+                if ( y+1 < 256 ){
+                    some_green = (int) (new_array[x  ][y+1].getGreen() + quant_error * 5.0/16);
+                    if (some_green > 255) some_green = 255;
+                    new_array[x  ][y+1].setGreen(some_green);
+                }
+                if ( x+1 < 256 && y+1 < 256){
+                    some_green = (int) (new_array[x+1][y+1].getGreen() + quant_error * 1.0/16);
+                    if (some_green > 255) some_green = 255;
+                    new_array[x+1][y+1].setGreen(some_green);
+                }
+
+
+
+
+
+
+
+                red_oldpixel = array[x][y].getRed();
+                red_newpixel = find_closest_palette_color_for_red(red_oldpixel);
+                new_array[x][y].setRed(red_newpixel);
+                quant_error = red_oldpixel - red_newpixel;
+
+                int some_red;
+
+                if ( x+1 < 256 ) {
+                    some_red= (int) (new_array[x+1][y  ].getRed() + quant_error * 7.0/16);
+                    if (some_red > 255) some_red = 255;
+                    new_array[x+1][y  ].setRed(some_red);
+                }
+                if ( x-1 > 0 && y+1 < 256 ) {
+                    some_red = (int) (new_array[x-1][y+1].getRed() + quant_error * 3.0/16);
+                    if (some_red > 255) some_red = 255;
+                    new_array[x-1][y+1].setRed(some_red);
+                }
+
+                if ( y+1 < 256 ){
+                    some_red = (int) (new_array[x  ][y+1].getRed() + quant_error * 5.0/16);
+                    if (some_red > 255) some_red = 255;
+                    new_array[x  ][y+1].setRed(some_red);
+                }
+                if ( x+1 < 256 && y+1 < 256){
+                    some_red = (int) (new_array[x+1][y+1].getRed() + quant_error * 1.0/16);
+                    if (some_red > 255) some_red = 255;
+                    new_array[x+1][y+1].setRed(some_red);
+                }
+
+
+
+
+
 
 
 
@@ -58,10 +108,29 @@ public class FilterFloydSteinbergDithering extends Filter {
                 blue_newpixel = find_closest_palette_color_for_blue(blue_oldpixel);
                 new_array[x][y].setBlue(blue_newpixel);
                 quant_error = blue_oldpixel - blue_newpixel;
-                if ( x+1 < 256 )new_array[x+1][y  ].setBlue(new_array[x+1][y  ].getBlue() + quant_error * 7/16);
-                if ( x-1 > 0 && y+1 < 256 )new_array[x-1][y+1].setBlue(new_array[x-1][y+1].getBlue() + quant_error * 3/16);
-                if ( y+1 < 256 )new_array[x  ][y+1].setBlue(new_array[x  ][y+1].getBlue() + quant_error * 5/16);
-                if ( x+1 < 256 && y+1 < 256)new_array[x+1][y+1].setBlue(new_array[x+1][y+1].getBlue() + quant_error * 1/16);
+                int some_blue;
+
+                if ( x+1 < 256 ) {
+                    some_blue= (int) (new_array[x+1][y  ].getBlue() + quant_error * 7.0/16);
+                    if (some_blue > 255) some_blue = 255;
+                    new_array[x+1][y  ].setBlue(some_blue);
+                }
+                if ( x-1 > 0 && y+1 < 256 ) {
+                    some_blue = (int) (new_array[x-1][y+1].getBlue() + quant_error * 3.0/16);
+                    if (some_blue > 255) some_blue = 255;
+                    new_array[x-1][y+1].setBlue(some_blue);
+                }
+
+                if ( y+1 < 256 ){
+                    some_blue = (int) (new_array[x  ][y+1].getBlue() + quant_error * 5.0/16);
+                    if (some_blue > 255) some_blue = 255;
+                    new_array[x  ][y+1].setBlue(some_blue);
+                }
+                if ( x+1 < 256 && y+1 < 256){
+                    some_blue = (int) (new_array[x+1][y+1].getBlue() + quant_error * 1.0/16);
+                    if (some_blue > 255) some_blue = 255;
+                    new_array[x+1][y+1].setBlue(some_blue);
+                }
             }
         return new_array;
     }
@@ -72,15 +141,16 @@ public class FilterFloydSteinbergDithering extends Filter {
         if (color > 255)
             color = 255;
         int one = 256/ red_param;
-        if (color%one < one/2){
+        //if (color%one < one/2){
             if (color/one != 0) {
                 return one * (color/one)-1;
             } else {
                 return one * (color/one);
-            }        }
-        else {
-            return one * (color/one+1)-1;
-        }
+            }
+//        }
+//        else {
+//            return one * (color/one+1)-1;
+//        }
     }
 
     private static int find_closest_palette_color_for_green(int color) {
@@ -89,15 +159,16 @@ public class FilterFloydSteinbergDithering extends Filter {
         if (color > 255)
             color = 255;
         int one = 256/ green_param;
-        if (color%one < one/2){
+       // if (color%one < one/2){
             if (color/one != 0) {
                 return one * (color/one)-1;
             } else {
                 return one * (color/one);
-            }        }
-        else {
-            return one * (color/one+1)-1;
-        }
+            }
+//        }
+//        else {
+//            return one * (color/one+1)-1;
+//        }
     }
     private static int find_closest_palette_color_for_blue(int color) {
         if (color < 0)
@@ -105,14 +176,15 @@ public class FilterFloydSteinbergDithering extends Filter {
         if (color > 255)
             color = 255;
         int one = 256/ blue_param;
-        if (color%one < one/2){
+//        if (color%one < one/2){
             if (color/one != 0) {
                 return one * (color/one)-1;
             } else {
                 return one * (color/one);
-            }        }
-        else {
-            return one * (color/one+1)-1;
-        }
+            }
+//        }
+//        else {
+//            return one * (color/one+1)-1;
+//        }
     }
 }

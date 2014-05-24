@@ -44,7 +44,7 @@ public class BMPParser {
             e.printStackTrace();
         }
         if (header[1] != 77 || header[0] != 66) {
-            throw new Error("NBF");//TODO
+            throw new Error("NotBmpFile");//TODO
         }
 
         System.out.println("size = " + ( fileSize = assembleNumber(header[5], header[4], header[3], header[2]) ) );

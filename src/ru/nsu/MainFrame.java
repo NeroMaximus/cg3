@@ -274,13 +274,13 @@ public class MainFrame extends JFrame implements ActionListener {
             // Demonstrate "Save" dialog:
             int rVal = c.showSaveDialog(mainFrame);
             if (rVal == JFileChooser.APPROVE_OPTION) {
-
-                new Thread( new Runnable() {
-                    @Override
-                    public void run() {
+//
+//                new Thread( new Runnable() {
+//                    @Override
+//                    public void run() {
                         Saver.save(c.getSelectedFile(), thirdWindow.getArray(), parser.getImageInfo());
-                    }
-                }).run();
+//                    }
+//                }).run();
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
 
